@@ -66,3 +66,7 @@ gem 'haml-rails'
 gem 'sassc', '2.1.0'
 gem 'font-awesome-sass'
 gem 'unicorn', '5.4.1'
+
+group :production do
+  gem 'unicorn', '5.4.1'
+end
