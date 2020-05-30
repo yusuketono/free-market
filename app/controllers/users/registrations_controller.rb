@@ -11,12 +11,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  def create
-    build_resource(sign_up_params) #@user=User.new(user_params)と同様の処理
-    @user.save! unless @user.valid?
-
-    super
-  end
 
   # GET /resource/edit
   # def edit
