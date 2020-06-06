@@ -66,6 +66,7 @@ gem 'haml-rails'
 gem 'sassc', '2.1.0'
 gem 'font-awesome-sass'
 # gem 'unicorn', '5.4.1'
+gem 'recaptcha', '>= 5.4.1',  require: "recaptcha/rails"
 
 group :production do
   gem 'unicorn', '5.4.1'
