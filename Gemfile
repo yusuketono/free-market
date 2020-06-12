@@ -71,3 +71,6 @@ gem 'recaptcha', '>= 5.4.1',  require: "recaptcha/rails"
 group :production do
   gem 'unicorn', '5.4.1'
 end
+
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
