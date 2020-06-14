@@ -4,7 +4,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def callback_for(provider)
-    redirect_to root_path, notice: "認証成功です"
+    redirect_to new_user_registration_path, notice: "認証成功です"
   end
 
   def failure
