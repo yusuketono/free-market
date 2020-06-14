@@ -3,11 +3,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     callback_for(:google)
   end
 
-  def callback_for(provider)
-    redirect_to new_user_registration_path, notice: "認証成功です"
-  end
-
-  def failure
-    redirect_to root_path, alert: "エラーが発生しました" and return
+  def callback_for(provider)  
+    email = request.env["omniauth.auth"].info.email
+    nickname = request.env["omniauth.auth"].info.name
+    uid = request.env["omniauth.auth"].uid
+    provider = request.env["omniauth.auth"].provider  
+    
+    SnsCredential.create(uid: uid, provider: provider)
+    @user = User.new(email: email, nickname: nickname)
+    render layout: 'no_menu', template: 'devise/registrations/new'
   end
 end
