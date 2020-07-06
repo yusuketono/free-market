@@ -4,17 +4,18 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def callback_for(provider)
-    email = request.env["omniauth.auth"].info.email
-    nickname = request.env["omniauth.auth"].info.name
-    ## ーーーーー追加ここからーーーーー
-    uid = request.env["omniauth.auth"].uid
-    provider = request.env["omniauth.auth"].provider  
-    
-    SnsCredential.create(uid: uid, provider: provider)
-    ## ーーーーー追加ここまでーーーーー
+    user_sns = User.from_omniauth(request.env["omniauth.auth"])
+    @user = user_sns[:user]
+    sns_credential = user_sns[:sns_credential]
 
-    @user = User.new(email: email, nickname: nickname)
-    render layout: 'no_menu', template: 'devise/registrations/new'
+    if @user.persisted?
+      ## @userが登録済み
+      sns_credential.update(user_id: @user.id)
+      sign_in_and_redirect @user, event: :authentication
+    else
+      ## @userが未登録
+      render layout: 'no_menu', template: 'devise/registrations/new'
+    end
   end
 
   def failure
