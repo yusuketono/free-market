@@ -24,7 +24,7 @@ class User < ApplicationRecord
     end
 
     ## sns_credentialに紐付いたuserがいるかどうか
-    if sns_credential.user.present?
+    if sns_credential.user_id.present?
       ## sns_credential.userが居るならB（SNS認証で登録した）が確定するのでここで終了
       return {user: sns_credential.user, sns_credential: sns_credential}
     else
