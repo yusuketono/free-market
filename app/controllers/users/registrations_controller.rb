@@ -7,6 +7,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :check_recaptcha, only: %i(create)
   layout 'no_menu'
 
+  def new
+    @progress = 1  ## 追加
+    if session["devise.sns_auth"]
+      ## session["devise.sns_auth"]がある＝sns認証
+      build_resource(session["devise.sns_auth"]["user"])
+      @sns_auth = true
+    else
+      ## session["devise.sns_auth"]がない=sns認証ではない
+      super
+    end
+  end
+
   def create
     if params[:user][:sns_auth]
       ## SNS認証でユーザー登録をしようとしている場合
@@ -53,16 +65,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def select
+    session.delete("devise.sns_auth")
     @auth_text = "で登録する"
   end
 
   def confirm_phone
+    @progress = 2
   end
 
   def new_address
+    @progress = 3
   end
 
-  def completed
+  def create_address
+    @progress = 5
   end
 
   # protected
