@@ -14,6 +14,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication
     else
       ## @userが未登録
+      @sns_auth = true
       render layout: 'no_menu', template: 'devise/registrations/new'
     end
   end

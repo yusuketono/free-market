@@ -7,6 +7,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :check_recaptcha, only: %i(create)
   layout 'no_menu'
 
+  def create
+    if params[:user][:sns_auth]
+      ## SNS認証でユーザー登録をしようとしている場合
+      ## ーーーーー追加ここからーーーーー
+      ## パスワードが未入力なのでランダムで生成する
+      password = Devise.friendly_token[8,12] + "1a"
+      ## 生成したパスワードをparamsに入れる
+      params[:user][:password] = password
+      params[:user][:password_confirmation] = password
+      ## ーーーーー追加ここまでーーーーー
+    end
+  
+    super
+  end
   # GET /resource/sign_up
   # def new
   #   super
