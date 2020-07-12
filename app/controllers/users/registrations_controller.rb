@@ -75,10 +75,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def new_address
     @progress = 3
+    @address = Address.new
   end
 
   def create_address
     @progress = 5
+    redirect_to users_new_address_path, notice: "成功です"
   end
 
   # protected
