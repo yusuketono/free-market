@@ -52,14 +52,13 @@
         = f.label :hoge, "カテゴリ"
         %span.required-true
           必須
-        = f.collection_select :hoge, [], :hoge , :hoge, {include_blank: "---"}, required: true, class: "select-category", id: "parent-category"
+        = f.collection_select :hoge, Category.all, :id, :name, {include_blank: "---"}, required: true, class: "select-category", id: "parent-category"
         .error-field{data:{column_name: "category"}}
-
         = f.label :hoge, "商品の状態"
         %span.required-true
           必須
         %br
-        = f.select :hoge, [], {include_blank: "---"}
+        = f.select :hoge, Item.conditions.keys, {include_blank: "---"}
   .block.horizontal-padding-5
     .input-field
       .input-field-title
@@ -70,7 +69,7 @@
         %span.required-true
           必須
         %br
-        = f.select :hoge, [], {include_blank: "---"}
+        = f.select :hoge, Item.delivery_fee_payers.keys, {include_blank: "---"}
         .error-field{data:{column_name: "delivery_fee_payer"}}
         %br
         .input-field-main__delivery-method
@@ -78,21 +77,21 @@
           %span.required-true
             必須
           %br
-          = f.select :hoge, [], {include_blank: "---"}
+          = f.select :hoge, Item.delivery_methods.keys, {include_blank: "---"}
           %br
           .error-field{data:{column_name: "delivery_method"}}
         = f.label :hoge, "発送元の地域"
         %span.required-true
           必須
         %br
-        = f.collection_select :hoge, [], :hoge , :hoge, {include_blank: "---"}, required: true, placeholder: "発送元の地域"
+        = f.collection_select :hoge, Prefecture.all, :id , :name, {include_blank: "---"}, required: true, placeholder: "発送元の地域"
         .error-field{data:{column_name: "delivery_agency"}}
         %br
         = f.label :hoge, "発送までの日数"
         %span.required-true
           必須
         %br
-        = f.select :hoge, [], {include_blank: "---"}
+        = f.select :hoge, Item.delivery_days.keys, {include_blank: "---"}
         .error-field{data:{column_name: "delivery_days"}}
   .block.horizontal-padding-5
     .input-field
