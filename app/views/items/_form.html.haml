@@ -1,7 +1,7 @@
 .block
   .block__menu
     商品の情報を入力
-= form_with local: true, html: {id: "item_form"} do |f|
+= form_with model: @item, local: true, html: {id: "item_form"} do |f| 
   .block.horizontal-padding-5
     .input-field
       .input-field-main
