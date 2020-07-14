@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     get 'users/completed' => 'users/registrations#completed'
   end
 
-  resources :users, only: [:show]
+  resources :items, only: [:index, :new, :create, :show, :edit]  do
 
   resources :items, only: [:index, :new, :show, :edit]  do
     member do

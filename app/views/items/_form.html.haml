@@ -29,7 +29,7 @@
   .block.horizontal-padding-5
     .input-field
       .input-field-main
-        = f.label :hoge, "商品名"
+        = f.label :name, "商品名"
         %span.required-true
           必須
         %br
@@ -37,7 +37,7 @@
         .error-field{data:{column_name: "name"}}
     .input-field
       .input-field-main
-        = f.label :hoge, "商品の説明"
+        = f.label :detail, "商品の説明"
         %span.required-true
           必須
         %br
@@ -49,12 +49,12 @@
         .input-field-title__text
           商品の詳細
       .input-field-main
-        = f.label :hoge, "カテゴリ"
+        = f.label :category_id, "カテゴリ"
         %span.required-true
           必須
         = f.collection_select :hoge, Category.all, :id, :name, {include_blank: "---"}, required: true, class: "select-category", id: "parent-category"
         .error-field{data:{column_name: "category"}}
-        = f.label :hoge, "商品の状態"
+        = f.label :condition, "商品の状態"
         %span.required-true
           必須
         %br
@@ -65,7 +65,7 @@
         .input-field-title__text
           配送について
       .input-field-main
-        = f.label :hoge, "配送料の負担"
+        = f.label :delivery_fee_payer, "配送料の負担"
         %span.required-true
           必須
         %br
@@ -73,21 +73,21 @@
         .error-field{data:{column_name: "delivery_fee_payer"}}
         %br
         .input-field-main__delivery-method
-          = f.label :hoge, "配送の方法"
+          = f.label :delivery_method, "配送の方法"
           %span.required-true
             必須
           %br
           = f.select :hoge, Item.delivery_methods.keys, {include_blank: "---"}
           %br
           .error-field{data:{column_name: "delivery_method"}}
-        = f.label :hoge, "発送元の地域"
+        = f.label :prefecture_id, "発送元の地域"
         %span.required-true
           必須
         %br
         = f.collection_select :hoge, Prefecture.all, :id , :name, {include_blank: "---"}, required: true, placeholder: "発送元の地域"
         .error-field{data:{column_name: "delivery_agency"}}
         %br
-        = f.label :hoge, "発送までの日数"
+        = f.label :delivery_day, "発送までの日数"
         %span.required-true
           必須
         %br
@@ -101,7 +101,7 @@
       .input-field-main
         .input-field-main-price
           .input-field-main-price__left
-            = f.label :hoge, "価格"
+            = f.label :price, "価格"
             %span.required-true
               必須
           .input-field-main-price__right
