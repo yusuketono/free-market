@@ -5,6 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   prepend_before_action :check_recaptcha, only: %i(create)
+  before_action :session_has_not_user, only: [:confirm_phone, :new_address, :create_address] 
   layout 'no_menu'
 
   def new
@@ -20,18 +21,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    if params[:user][:sns_auth]
+    if session["devise.sns_auth"]
       ## SNS認証でユーザー登録をしようとしている場合
-      ## ーーーーー追加ここからーーーーー
       ## パスワードが未入力なのでランダムで生成する
       password = Devise.friendly_token[8,12] + "1a"
       ## 生成したパスワードをparamsに入れる
       params[:user][:password] = password
       params[:user][:password_confirmation] = password
-      ## ーーーーー追加ここまでーーーーー
     end
-  
-    super
+
+    build_resource(sign_up_params)  ## @user = User.new(user_params) をしているイメージ
+    unless resource.valid? ## 登録に失敗したとき
+      ## 進捗バー用の@progressとflashメッセージをセットして戻る
+      @progress = 1
+      @sns_auth = true if session["devise.sns_auth"]
+      flash.now[:alert] = resource.errors.full_messages
+      render :new and return
+    end
+
+    session["devise.user_object"] = @user.attributes  ## sessionに@userを入れる
+    session["devise.user_object"][:password] = params[:user][:password]  ## 暗号化前のパスワードをsessionに入れる
+    respond_with resource, location: after_sign_up_path_for(resource)  ## リダイレクト
   end
   # GET /resource/sign_up
   # def new
@@ -81,8 +91,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create_address
     @progress = 5
     @address = Address.new(address_params)
-    unless @address.save
-      render layout: 'no_menu', action: 'new_address' 
+    if @address.invalid?
+      redirect_to users_new_address_path, alert: @address.errors.full_messages
     end
   end
 
@@ -126,4 +136,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :building_name,
       )
   end
+
+  def session_has_not_user
+    redirect_to new_user_registration_path, alert: "会員情報を入力してください。" unless session["devise.user_object"].present?
+  end
+
 end
