@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-
+  skip_before_action :authenticate_user!, only: [:index]
   def new
     @item = Item.new
     render layout: 'no_menu' # レイアウトファイルを指定
