@@ -91,7 +91,7 @@
         %span.required-true
           必須
         %br
-        = f.select :hoge, Item.delivery_days.keys, {include_blank: "---"}
+        = f.select :delivery_days, Item.delivery_days, {include_blank: "---"}
         .error-field{data:{column_name: "delivery_days"}}
   .block.horizontal-padding-5
     .input-field

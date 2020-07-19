@@ -15,8 +15,6 @@ Rails.application.routes.draw do
   end
 
   resources :items, only: [:index, :new, :create, :show, :edit]  do
-
-  resources :items, only: [:index, :new, :show, :edit]  do
     member do
       get "purchase_confirmation"
     end
