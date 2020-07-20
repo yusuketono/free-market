@@ -2,6 +2,10 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   has_one :address, dependent: :destroy 
+  has_many :selling_items, class_name: "Item", foreign_key: "seller_id"
+  has_many :bought_items, class_name: "Item", foreign_key: "buyer_id"
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to_active_hash :prefecture
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,

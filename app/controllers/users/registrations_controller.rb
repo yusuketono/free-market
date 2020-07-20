@@ -38,7 +38,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       flash.now[:alert] = resource.errors.full_messages
       render :new and return
     end
-
     session["devise.user_object"] = @user.attributes  ## sessionに@userを入れる
     session["devise.user_object"][:password] = params[:user][:password]  ## 暗号化前のパスワードをsessionに入れる
     respond_with resource, location: after_sign_up_path_for(resource)  ## リダイレクト
@@ -91,8 +90,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create_address
     @progress = 5
     @address = Address.new(address_params)
-    if @address.invalid?
+    if @address.invalid? ## バリデーションに引っかかる（save不可な）時はここで終了
       redirect_to users_new_address_path, alert: @address.errors.full_messages
+    end
+    ## user,sns_credential,addressの登録とログインをする
+    @progress = 5
+    ## ↓@user = User.newをしているイメージ
+    @user = build_resource(session["devise.user_object"])
+    @user.build_sns_credential(session["devise.sns_auth"]["sns_credential"]) if session["devise.sns_auth"] ## sessionがあるとき＝sns認証でここまできたとき
+    @user.address = @address
+    if @user.save
+      sign_up(resource_name, resource)  ## ログインさせる
+    else
+      redirect_to root_path, alert: @user.errors.full_messages
     end
   end
 
