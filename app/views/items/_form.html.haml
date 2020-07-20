@@ -33,7 +33,7 @@
         %span.required-true
           必須
         %br
-        = f.text_field :hoge, required: true, placeholder: "PC・携帯どちらも可"
+        = f.text_field :name, required: true, placeholder: "PC・携帯どちらも可"
         .error-field{data:{column_name: "name"}}
     .input-field
       .input-field-main
@@ -41,7 +41,7 @@
         %span.required-true
           必須
         %br
-        = f.text_area :hoge, required: true, placeholder: "6文字以上", rows: 5
+        = f.text_area :detail, required: true, placeholder: "6文字以上", rows: 5
         .error-field{data:{column_name: "detail"}}
   .block.horizontal-padding-5
     .input-field
@@ -52,13 +52,13 @@
         = f.label :category_id, "カテゴリ"
         %span.required-true
           必須
-        = f.collection_select :hoge, Category.all, :id, :name, {include_blank: "---"}, required: true, class: "select-category", id: "parent-category"
+        = f.collection_select :category_id, Category.all, :id, :name, {include_blank: "---"}, required: true, class: "select-category", id: "parent-category"
         .error-field{data:{column_name: "category"}}
         = f.label :condition, "商品の状態"
         %span.required-true
           必須
         %br
-        = f.select :hoge, Item.conditions.keys, {include_blank: "---"}
+        = f.select :condition, Item.conditions.keys, {include_blank: "---"}
   .block.horizontal-padding-5
     .input-field
       .input-field-title
@@ -69,7 +69,7 @@
         %span.required-true
           必須
         %br
-        = f.select :hoge, Item.delivery_fee_payers.keys, {include_blank: "---"}
+        = f.select :delivery_fee_payer, Item.delivery_fee_payers.keys, {include_blank: "---"}
         .error-field{data:{column_name: "delivery_fee_payer"}}
         %br
         .input-field-main__delivery-method
@@ -77,21 +77,21 @@
           %span.required-true
             必須
           %br
-          = f.select :hoge, Item.delivery_methods.keys, {include_blank: "---"}
+          = f.select :delivery_method, Item.delivery_methods.keys, {include_blank: "---"}
           %br
           .error-field{data:{column_name: "delivery_method"}}
         = f.label :prefecture_id, "発送元の地域"
         %span.required-true
           必須
         %br
-        = f.collection_select :hoge, Prefecture.all, :id , :name, {include_blank: "---"}, required: true, placeholder: "発送元の地域"
+        = f.collection_select :prefecture_id, Prefecture.all, :id , :name, {include_blank: "---"}, required: true, placeholder: "発送元の地域"
         .error-field{data:{column_name: "delivery_agency"}}
         %br
-        = f.label :delivery_day, "発送までの日数"
+        = f.label :delivery_days, "発送までの日数"
         %span.required-true
           必須
         %br
-        = f.select :delivery_days, Item.delivery_days, {include_blank: "---"}
+        = f.select :delivery_days, Item.delivery_days.keys, {include_blank: "---"}
         .error-field{data:{column_name: "delivery_days"}}
   .block.horizontal-padding-5
     .input-field
@@ -105,7 +105,7 @@
             %span.required-true
               必須
           .input-field-main-price__right
-            = f.text_field :hoge, required: true, placeholder: "価格"
+            = f.text_field :price, required: true, placeholder: "価格"
             .error-field{data:{column_name: "price"}}
         %hr
         .input-field-main-price
