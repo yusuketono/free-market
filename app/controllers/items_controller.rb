@@ -15,6 +15,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @item = Item.find(params[:id])  ## 追加
     render layout: 'no_menu' # レイアウトファイル指定
   end
 
