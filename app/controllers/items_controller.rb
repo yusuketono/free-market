@@ -21,6 +21,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @item.images.build
     render layout: 'no_menu' # レイアウトファイル指定
   end
 
