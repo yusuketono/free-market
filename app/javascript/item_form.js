@@ -20,7 +20,7 @@ document.addEventListener('turbolinks:load', function () {
   //新規画像投稿用のfile_fieldを作成しappendする。
   function newFileField(index) { 
     const html = `
-               <input accept="image/*" class="new-item-image" style="display: block;" data-index="${index}" type="file" name="item[images_attributes][${index}][src]" id="item_images_attributes_${index}_src">
+               <input accept="image/*" class="new-item-image" data-index="${index}" type="file" name="item[images_attributes][${index}][src]" id="item_images_attributes_${index}_src">
                `;
     return html;
   }
