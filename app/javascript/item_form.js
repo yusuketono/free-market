@@ -52,15 +52,26 @@ document.addEventListener('turbolinks:load', function () {
   $("#image-file-fields").on("change", `input[type="file"]`, function (e) { //新しく画像が選択された、もしくは変更しようとしたが何も選択しなかった時
     const file = e.target.files[0];
     let index = $(this).data("index");
+
+    if (!file) {
+      console.log("何も選択しませんでした");
+      const delete_button = $(`.item-image[data-index="${index}"]`).find(".item-image__buttons--delete");
+      delete_button.trigger("click");
+      return false;
+    }
+
     const blob_url = window.URL.createObjectURL(file); //選択された画像をblob url形式に変換する。
+
     if ($(`.item-image[data-index="${index}"]`)[0]) {
       console.log("画像の変更を行います");
       const preview_image = $(`.item-image[data-index="${index}"]`).children("img");
       preview_image.attr("src", blob_url);
       return false;
     }
+
     const preview_html = buildImagePreview(blob_url, index);
     $("#select-image-button").before(preview_html);
+
     index += 1;
     const file_field_html = newFileField(index);
     $("#image-file-fields").append(file_field_html);
