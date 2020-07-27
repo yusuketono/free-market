@@ -10,6 +10,10 @@ document.addEventListener('turbolinks:load', function () {
     console.table(e.target.files);
     console.log("画像が選択されました")
     const file = e.target.files[0];
+
+    let index = $(this).data("index");
+    console.log("選択した画像のindex=", index);
+
     const blob_url = window.URL.createObjectURL(file); //選択された画像をblob url形式に変換する。
     console.log(blob_url);
     const preview_html = `<img src="${blob_url}" width="20%">`;
