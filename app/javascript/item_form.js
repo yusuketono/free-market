@@ -1,6 +1,10 @@
 document.addEventListener('turbolinks:load', function () {
   if (!$('#item_form')[0]) return false; //商品出品・編集ページではないなら以降実行しない。
 
+  $("#selected-item-images").on("click", ".item-image__buttons--edit", function (e) {
+    console.log("編集ボタンをクリックしました")
+  });
+  
   // 画像の削除ボタンをクリックした時
   $("#selected-item-images").on("click", ".item-image__buttons--delete", function (e) {
     const index = $(this).parents(".item-image").data("index");
