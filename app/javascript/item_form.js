@@ -6,6 +6,7 @@ document.addEventListener('turbolinks:load', function () {
     const index = $(this).parents(".item-image").data("index");
     console.log(index, "番目の画像を削除します")
     $(this).parents(".item-image").remove();
+    $(`#item_images_attributes_${index}__destroy`).prop("checked", true);
   });
 
   //新規画像投稿用のfile_fieldを作成しappendする。
