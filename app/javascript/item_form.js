@@ -3,7 +3,8 @@ document.addEventListener('turbolinks:load', function () {
 
   // 画像の削除ボタンをクリックした時
   $("#selected-item-images").on("click", ".item-image__buttons--delete", function (e) {
-    console.log("削除ボタンをクリックしました")
+    const index = $(this).parents(".item-image").data("index");
+    console.log(index, "番目の画像を削除します")
   });
 
   //新規画像投稿用のfile_fieldを作成しappendする。
