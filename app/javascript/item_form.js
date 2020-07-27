@@ -1,6 +1,11 @@
 document.addEventListener('turbolinks:load', function () {
   if (!$('#item_form')[0]) return false; //商品出品・編集ページではないなら以降実行しない。
 
+  // 画像の削除ボタンをクリックした時
+  $("#selected-item-images").on("click", ".item-image__buttons--delete", function (e) {
+    console.log("削除ボタンをクリックしました")
+  });
+
   //新規画像投稿用のfile_fieldを作成しappendする。
   function newFileField(index) { 
     const html = `
