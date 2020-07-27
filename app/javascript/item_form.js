@@ -55,6 +55,8 @@ document.addEventListener('turbolinks:load', function () {
     const blob_url = window.URL.createObjectURL(file); //選択された画像をblob url形式に変換する。
     if ($(`.item-image[data-index="${index}"]`)[0]) {
       console.log("画像の変更を行います");
+      const preview_image = $(`.item-image[data-index="${index}"]`).children("img");
+      preview_image.attr("src", blob_url);
       return false;
     }
     const preview_html = buildImagePreview(blob_url, index);
