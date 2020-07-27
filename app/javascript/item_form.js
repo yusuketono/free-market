@@ -5,6 +5,7 @@ document.addEventListener('turbolinks:load', function () {
   $("#selected-item-images").on("click", ".item-image__buttons--edit", function (e) {
     const index = $(this).parents(".item-image").data("index");
     console.log(index, "番目の画像を編集します");
+    $(`#item_images_attributes_${index}_src`).trigger("click");
   });
 
   // 画像の削除ボタンをクリックした時
