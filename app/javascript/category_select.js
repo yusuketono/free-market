@@ -13,6 +13,7 @@ document.addEventListener('turbolinks:load', function () {
       dataType: 'json',
     }).done(function (categories) {
       console.log("success")
+      console.table(categories);
     })
     .fail(function () {
       alert('error');
