@@ -24,7 +24,12 @@ Rails.application.routes.draw do
       get 'search'
     end
   end
+
   resources :categories, only: [:index, :show]
+  namespace :api do
+    resources :categories, only: :index, defaults: { format: 'json' }
+  end
+
   resources :cards, only: [:index, :new]
 
 end

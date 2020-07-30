@@ -4,14 +4,12 @@ document.addEventListener('turbolinks:load', function () {
   // 画像の編集ボタンをクリックした時
   $("#selected-item-images").on("click", ".item-image__buttons--edit", function (e) {
     const index = $(this).parents(".item-image").data("index");
-    console.log(index, "番目の画像を編集します");
     $(`#item_images_attributes_${index}_src`).trigger("click");
   });
 
   // 画像の削除ボタンをクリックした時
   $("#selected-item-images").on("click", ".item-image__buttons--delete", function (e) {
     const index = $(this).parents(".item-image").data("index");
-    console.log(index, "番目の画像を削除します")
     $(this).parents(".item-image").remove();
     $(`#item_images_attributes_${index}__destroy`).prop("checked", true);
     $(`#item_images_attributes_${index}_src`).remove();
@@ -54,7 +52,6 @@ document.addEventListener('turbolinks:load', function () {
     let index = $(this).data("index");
 
     if (!file) {
-      console.log("何も選択しませんでした");
       const delete_button = $(`.item-image[data-index="${index}"]`).find(".item-image__buttons--delete");
       delete_button.trigger("click");
       return false;
@@ -63,7 +60,6 @@ document.addEventListener('turbolinks:load', function () {
     const blob_url = window.URL.createObjectURL(file); //選択された画像をblob url形式に変換する。
 
     if ($(`.item-image[data-index="${index}"]`)[0]) {
-      console.log("画像の変更を行います");
       const preview_image = $(`.item-image[data-index="${index}"]`).children("img");
       preview_image.attr("src", blob_url);
       return false;
