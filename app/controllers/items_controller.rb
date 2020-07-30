@@ -3,6 +3,15 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :destroy]
   before_action :user_is_not_seller, only: [:edit, :update, :destroy]
 
+  def index
+    @ladies_category = Category.find_by(name: "レディース")
+    @mens_category = Category.find_by(name: "メンズ")
+    @kids_category = Category.find_by(name: "ベビー・キッズ")
+    @ladies_items = Item.where(category: @ladies_category.subtree)
+    @mens_items = Item.where(category: @mens_category.subtree)
+    @kids_items = Item.where(category: @kids_category.subtree)
+  end
+
   def new
     @item = Item.new
     @item.images.build
