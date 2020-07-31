@@ -1,6 +1,6 @@
 .block.horizontal-padding-25
   .block__menu
-    = @item&.name
+    = @item.name
   .item-show
     = render partial: 'shared/sold_out', locals:{item: @item}
     .item-show__images-data
@@ -15,7 +15,7 @@
           %th.item-data__row--title
             出品者
           %td.item-data__row--value
-            hoge
+            = @item.seller.nickname
         %tr.item-data__row
           %th.item-data__row--title
             カテゴリ
@@ -29,30 +29,30 @@
           %th.item-data__row--title
             商品の状態
           %td.item-data__row--value
-            hoge
+            = @item.condition
         %tr.item-data__row
           %th.item-data__row--title
             配送料の負担
           %td.item-data__row--value
-            hoge
+            = @item.delivery_fee_payer
         %tr.item-data__row
           %th.item-data__row--title
             配送の方法
           %td.item-data__row--value
-            hoge
+            = @item.delivery_method
         %tr.item-data__row
           %th.item-data__row--title
             配送元地域
           %td.item-data__row--value
-            hoge
+            = @item.prefecture.name
         %tr.item-data__row
           %th.item-data__row--title
             発送日の目安
           %td.item-data__row--value
-            hoge
+            = @item.delivery_days
     .item-show__price
       .item-show__price--left
-        ¥1000
+        ¥#{@item.price}
       .item-show__price--middle
         （税込）
       .item-show__price--right
@@ -64,4 +64,4 @@
       .button.back-gray
         商品を編集する
     .item-show__detail
-      hoge
+      = @item.detail
