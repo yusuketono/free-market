@@ -2,14 +2,17 @@
   .block__menu
     = @item.name
   .item-show
-    = render partial: 'shared/sold_out', locals:{item: @item}
+    - if @item.deal != "販売中"
+      = render partial: 'shared/sold_out', locals:{item: @item}
     .item-show__images-data
       .item-images
         .item-images__main
           .item-images__main-images
-            = image_tag "", data: {big_image_index: 0}
+            - @item.images.each_with_index do |image, i|
+              = image_tag image.src.url, data: {big_image_index: i}
         .item-images__mini-images
-          = image_tag "", data: {mini_image_index: 0}
+          - @item.images.each_with_index do |image, i|
+            = image_tag image.src.url, data: {mini_image_index: i}
       %table.item-data
         %tr.item-data__row
           %th.item-data__row--title
@@ -20,11 +23,11 @@
           %th.item-data__row--title
             カテゴリ
           %td.item-data__row--value
-            = link_to "hoge", ""
+            = link_to @item.category.root.name, ""
             %br
-            = link_to ">hoge", ""
+            = link_to ">#{@item.category.parent.name}", "" 
             %br
-            = link_to ">hoge", ""
+            = link_to ">#{@item.category.name}", ""
         %tr.item-data__row
           %th.item-data__row--title
             商品の状態
@@ -57,12 +60,13 @@
         （税込）
       .item-show__price--right
         送料込み
-    = link_to "" do
-      .button.back-red
-        購入画面に進む
-  - if @item.seller == current_user 
-    = link_to edit_item_path(@item) do
-      .button.back-gray
-        商品を編集する
-    .item-show__detail
-      = @item.detail
+    - if @item.seller != current_user 
+      = link_to "" do
+        .button.back-red
+          購入画面に進む
+    - if @item.seller == current_user 
+      = link_to edit_item_path(@item) do
+        .button.back-gray
+          商品を編集する
+      .item-show__detail
+        = @item.detail
