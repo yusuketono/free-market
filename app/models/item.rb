@@ -10,6 +10,9 @@ class Item < ApplicationRecord
   accepts_nested_attributes_for :images
   accepts_nested_attributes_for :images, allow_destroy: true, update_only: true
 
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to_active_hash :prefecture
+
   enum condition:{
     "新品、未使用": 0,
     "未使用に近い": 1,
